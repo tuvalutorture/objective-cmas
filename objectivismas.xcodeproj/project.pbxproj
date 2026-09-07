@@ -1,0 +1,445 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D9264BE2304D528000D503F0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D9264BE1304D528000D503F0 /* main.m */; };
+		D9264BED304D592E00D503F0 /* SIMASStandardLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = D9264BEC304D592E00D503F0 /* SIMASStandardLibrary.m */; };
+		D9264C0B304E123500D503F0 /* SIMASVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = D9264BE9304D534C00D503F0 /* SIMASVariable.m */; };
+		D9264C0C304E123500D503F0 /* SIMASRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = D9264BF2304D594800D503F0 /* SIMASRuntime.m */; };
+		D9264C0D304E123500D503F0 /* SIMASFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = D9264BF5304E05FA00D503F0 /* SIMASFunction.m */; };
+		D9264C1B304E377000D503F0 /* SIMASList.m in Sources */ = {isa = PBXBuildFile; fileRef = D9264C1A304E377000D503F0 /* SIMASList.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D9264BDC304D528000D503F0 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		D9264BDE304D528000D503F0 /* objectivismas */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = objectivismas; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9264BE1304D528000D503F0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D9264BE8304D534C00D503F0 /* SIMASVariable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIMASVariable.h; sourceTree = "<group>"; };
+		D9264BE9304D534C00D503F0 /* SIMASVariable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIMASVariable.m; sourceTree = "<group>"; usesTabs = 1; };
+		D9264BEB304D592E00D503F0 /* SIMASStandardLibrary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIMASStandardLibrary.h; sourceTree = "<group>"; };
+		D9264BEC304D592E00D503F0 /* SIMASStandardLibrary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIMASStandardLibrary.m; sourceTree = "<group>"; };
+		D9264BF1304D594800D503F0 /* SIMASRuntime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIMASRuntime.h; sourceTree = "<group>"; };
+		D9264BF2304D594800D503F0 /* SIMASRuntime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIMASRuntime.m; sourceTree = "<group>"; };
+		D9264BF4304E05FA00D503F0 /* SIMASFunction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIMASFunction.h; sourceTree = "<group>"; };
+		D9264BF5304E05FA00D503F0 /* SIMASFunction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIMASFunction.m; sourceTree = "<group>"; };
+		D9264C13304E375000D503F0 /* listeria.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = listeria.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9264C15304E375000D503F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D9264C19304E377000D503F0 /* SIMASList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIMASList.h; sourceTree = "<group>"; };
+		D9264C1A304E377000D503F0 /* SIMASList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIMASList.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D9264BDB304D528000D503F0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9264C10304E375000D503F0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D9264BD5304D528000D503F0 = {
+			isa = PBXGroup;
+			children = (
+				D9264C0E304E373A00D503F0 /* lists */,
+				D9264BE0304D528000D503F0 /* objectivismas */,
+				D9264C14304E375000D503F0 /* listeria */,
+				D9264BDF304D528000D503F0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D9264BDF304D528000D503F0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9264BDE304D528000D503F0 /* objectivismas */,
+				D9264C13304E375000D503F0 /* listeria.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D9264BE0304D528000D503F0 /* objectivismas */ = {
+			isa = PBXGroup;
+			children = (
+				D9264BE1304D528000D503F0 /* main.m */,
+				D9264BE8304D534C00D503F0 /* SIMASVariable.h */,
+				D9264BE9304D534C00D503F0 /* SIMASVariable.m */,
+				D9264BF1304D594800D503F0 /* SIMASRuntime.h */,
+				D9264BF2304D594800D503F0 /* SIMASRuntime.m */,
+				D9264BF4304E05FA00D503F0 /* SIMASFunction.h */,
+				D9264BF5304E05FA00D503F0 /* SIMASFunction.m */,
+				D9264BEB304D592E00D503F0 /* SIMASStandardLibrary.h */,
+				D9264BEC304D592E00D503F0 /* SIMASStandardLibrary.m */,
+			);
+			path = objectivismas;
+			sourceTree = "<group>";
+		};
+		D9264C0E304E373A00D503F0 /* lists */ = {
+			isa = PBXGroup;
+			children = (
+				D9264C19304E377000D503F0 /* SIMASList.h */,
+				D9264C1A304E377000D503F0 /* SIMASList.m */,
+			);
+			path = lists;
+			sourceTree = "<group>";
+		};
+		D9264C14304E375000D503F0 /* listeria */ = {
+			isa = PBXGroup;
+			children = (
+				D9264C15304E375000D503F0 /* Info.plist */,
+			);
+			path = listeria;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D9264BDD304D528000D503F0 /* objectivismas */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9264BE5304D528000D503F0 /* Build configuration list for PBXNativeTarget "objectivismas" */;
+			buildPhases = (
+				D9264BDA304D528000D503F0 /* Sources */,
+				D9264BDB304D528000D503F0 /* Frameworks */,
+				D9264BDC304D528000D503F0 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = objectivismas;
+			productName = objectivismas;
+			productReference = D9264BDE304D528000D503F0 /* objectivismas */;
+			productType = "com.apple.product-type.tool";
+		};
+		D9264C12304E375000D503F0 /* listeria */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9264C16304E375000D503F0 /* Build configuration list for PBXNativeTarget "listeria" */;
+			buildPhases = (
+				D9264C0F304E375000D503F0 /* Sources */,
+				D9264C10304E375000D503F0 /* Frameworks */,
+				D9264C11304E375000D503F0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = listeria;
+			productName = listeria;
+			productReference = D9264C13304E375000D503F0 /* listeria.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D9264BD6304D528000D503F0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1030;
+				ORGANIZATIONNAME = "Xander Gomez";
+				TargetAttributes = {
+					D9264BDD304D528000D503F0 = {
+						CreatedOnToolsVersion = 10.3;
+					};
+					D9264C12304E375000D503F0 = {
+						CreatedOnToolsVersion = 10.3;
+					};
+				};
+			};
+			buildConfigurationList = D9264BD9304D528000D503F0 /* Build configuration list for PBXProject "objectivismas" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D9264BD5304D528000D503F0;
+			productRefGroup = D9264BDF304D528000D503F0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D9264BDD304D528000D503F0 /* objectivismas */,
+				D9264C12304E375000D503F0 /* listeria */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D9264C11304E375000D503F0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D9264BDA304D528000D503F0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9264C0D304E123500D503F0 /* SIMASFunction.m in Sources */,
+				D9264BE2304D528000D503F0 /* main.m in Sources */,
+				D9264BED304D592E00D503F0 /* SIMASStandardLibrary.m in Sources */,
+				D9264C0C304E123500D503F0 /* SIMASRuntime.m in Sources */,
+				D9264C0B304E123500D503F0 /* SIMASVariable.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9264C0F304E375000D503F0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9264C1B304E377000D503F0 /* SIMASList.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D9264BE3304D528000D503F0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = NO;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ./objectivismas;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D9264BE4304D528000D503F0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = NO;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ./objectivismas;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D9264BE6304D528000D503F0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D9264BE7304D528000D503F0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		D9264C17304E375000D503F0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = listeria/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				OTHER_LDFLAGS = (
+					"-Wl,-flat_namespace",
+					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
+					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
+					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
+					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
+					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
+					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
+					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
+					"-Wl,-undefined,dynamic_lookup",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.xandergomez.listeria;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		D9264C18304E375000D503F0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = listeria/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				OTHER_LDFLAGS = (
+					"-Wl,-flat_namespace",
+					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
+					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
+					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
+					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
+					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
+					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
+					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
+					"-Wl,-undefined,dynamic_lookup",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.xandergomez.listeria;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D9264BD9304D528000D503F0 /* Build configuration list for PBXProject "objectivismas" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9264BE3304D528000D503F0 /* Debug */,
+				D9264BE4304D528000D503F0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9264BE5304D528000D503F0 /* Build configuration list for PBXNativeTarget "objectivismas" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9264BE6304D528000D503F0 /* Debug */,
+				D9264BE7304D528000D503F0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9264C16304E375000D503F0 /* Build configuration list for PBXNativeTarget "listeria" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9264C17304E375000D503F0 /* Debug */,
+				D9264C18304E375000D503F0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D9264BD6304D528000D503F0 /* Project object */;
+}
