@@ -2,22 +2,15 @@
 *Originally reated by: Turrnut*<br>
 **Brought to C, and once again to Objective-C by tuvalutorture.**<br>
 
-License: GPLv3, which is the same as the [original SIMAS repo, which is also licensed under GPLv3](https://github.com/turrnut/simas).
+License: GPLv3, which is the same as the [original SIMAS repo, which is also licensed under GPLv3](https://github.com/turrnut/simas) and [CMAS](https://github.com/tuvalutorture/simas).
 
 **SIMAS**, which is an acronym for **SIM**ple **AS**sembly, is a dynamically typed, high level procedural programming language  
 with a syntax that is inspired by the Assembly programming language.<br>
 In SIMAS, each line starts with an instruction, optionally followed by one or more operands, just like Assembly.<br>
 To run a SIMAS program, simply run ```./simas <filename(s)>```. <br>
-Additionally, you can use the ```-d``` flag as the last argument to get more info.
 You can also run just ```./simas``` for the SIMAS command line.
 
-An demo program, Jeremy Simulator (```jeremy.simas```), is included to showcase CMAS' features & capability.
-
-**Building**<br>
-Note: Building CMAS requires some form of GCC to be installed (when using the built in compiler scripts, otherwise do whatever).
-
-To build CMAS, simply run ```build.sh```, and it will create an executable you can run. <br>
-If using on Microslop Windows, instead use ```build.bat```.
+Note: Building CMAS requires you to either use a Macintosh / NeXTSTEP computer with Xcode / Project builder installed OR a compiler with GNUSTEP. 
 
 **Additional Notes** <br>
 SIMAS is case-sensitive, although instructions and data types are not. <br>
@@ -33,6 +26,7 @@ For example, `PLEASE PRINTC "Hello!";` and `PRINTC "Hello!";` does the same thin
     * `\t` - Tab character
     * `\r` - Carriage return (for files and such)
     * `\"` - Quotation mark (inside other quotes)
+    * `\;` - Semicolon (used to say a line is not yet ended)
 * Operations like `WRITE` or `PRINTC` need quotes to wrap string literals.
 * All statements, including function definitions or comments **must** end in semicolons.
 * Accessing arguments in functions starts with `$` followed by a number (starting from 1). Ex. `$1`, `$2`, etc.
@@ -46,6 +40,8 @@ but be warned that most CMAS code may not run correctly on other implementations
 CMAS tries to achieve maximal parity with SIMASJS, and as such supports (nearly) all SIMASJS instructions & behaviour,
 but also has its own superset of features & instructions.<br>
 
+The same applies to CMAS and Objective-CMAS, behaviour and instructions have changed, and it should not be assumed that one will behave like the other.
+
 #### Known CMAS-only features (excluding instructions):
 * Type coersion - For operations like `ADD`, not all operands need to be `num` type, as their values will be coerced into `num`-compatible values.
 * Type assignment - For operations like `ADD`, rather than OPERAND 1 always being `num`, you can set it to any type, and the resulting value of the operation
@@ -53,9 +49,14 @@ will be coerced into that new type & assigned to OPERAND 2.
 * Indexing w/ vars - When indexing a list, CMAS supports indexing using pre-existing vars. This is not supported in SIMASJS as of writing this.
 * ***VERY IMPORTANT!*** Lists passed by value - When calling / returning a function, lists in CMAS are passed by VALUE, not reference. This is different from SIMASJS,
 and MUST be kept in mind if attempting to write cross-compatible programs.
-* String Literals - In CMAS, String Literals (longer than one word/token) are required to be wrapped in quotation marks (`"`), whilst SIMASJS does not hold this requirement. 
+* String Literals - In CMAS, String Literals are required to be wrapped in quotation marks (`"`), whilst SIMASJS does not hold this requirement. 
 * CMAS is whitespace-insensitive for tokenisation, so instructions may be split by multiple spaces, lines, etc. This differs from SIMASJS, which requires EXACTLY one space per token.
 * CMAS supports calling functions from within functions, which is NOT supported by SIMASJS and will often lead to an infinite loop of execution.
 * CMAS supports chaining certain instructions, such as `LIST APPC`, allowing you to save lines (and memory) by simply chaining instructions instead of having many independent function calls.
+
+#### Known Objective-CMAS exclusive features:
+* Libraries - Objective-CMAS is currently the only known SIMAS implementation to support the inclusion of SIMAS libraries, adding new instructions or types.
+* Type addition - Objective-CMAS is not locked to the included types, libraries can add their own types.
+
 # Links
 For instructions & datatypes, check <a href="DOCS.md">here.</a>

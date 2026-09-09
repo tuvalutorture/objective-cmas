@@ -3,16 +3,21 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 45;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		D9264BE2304D528000D503F0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D9264BE1304D528000D503F0 /* main.m */; };
 		D9264BED304D592E00D503F0 /* SIMASStandardLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = D9264BEC304D592E00D503F0 /* SIMASStandardLibrary.m */; };
-		D9264C0B304E123500D503F0 /* SIMASVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = D9264BE9304D534C00D503F0 /* SIMASVariable.m */; };
-		D9264C0C304E123500D503F0 /* SIMASRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = D9264BF2304D594800D503F0 /* SIMASRuntime.m */; };
-		D9264C0D304E123500D503F0 /* SIMASFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = D9264BF5304E05FA00D503F0 /* SIMASFunction.m */; };
-		D9264C1B304E377000D503F0 /* SIMASList.m in Sources */ = {isa = PBXBuildFile; fileRef = D9264C1A304E377000D503F0 /* SIMASList.m */; };
+		D9264C203051870200D503F0 /* SIMASCommandLine.m in Sources */ = {isa = PBXBuildFile; fileRef = D9264C1F3051870200D503F0 /* SIMASCommandLine.m */; };
+		D9264C223051872A00D503F0 /* SIMASList.m in Sources */ = {isa = PBXBuildFile; fileRef = D9264C1A304E377000D503F0 /* SIMASList.m */; };
+		D9264C353051915700D503F0 /* libsimas_runtime.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9264C2B3051914B00D503F0 /* libsimas_runtime.a */; };
+		D9264C363051916200D503F0 /* SIMASVariable.h in Headers */ = {isa = PBXBuildFile; fileRef = D9264BE8304D534C00D503F0 /* SIMASVariable.h */; };
+		D9264C373051916200D503F0 /* SIMASVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = D9264BE9304D534C00D503F0 /* SIMASVariable.m */; };
+		D9264C383051916200D503F0 /* SIMASRuntime.h in Headers */ = {isa = PBXBuildFile; fileRef = D9264BF1304D594800D503F0 /* SIMASRuntime.h */; };
+		D9264C393051916200D503F0 /* SIMASRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = D9264BF2304D594800D503F0 /* SIMASRuntime.m */; };
+		D9264C3A3051916200D503F0 /* SIMASFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = D9264BF4304E05FA00D503F0 /* SIMASFunction.h */; };
+		D9264C3B3051916200D503F0 /* SIMASFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = D9264BF5304E05FA00D503F0 /* SIMASFunction.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,17 +36,21 @@
 		D9264BDE304D528000D503F0 /* objectivismas */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = objectivismas; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9264BE1304D528000D503F0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D9264BE8304D534C00D503F0 /* SIMASVariable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIMASVariable.h; sourceTree = "<group>"; };
-		D9264BE9304D534C00D503F0 /* SIMASVariable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIMASVariable.m; sourceTree = "<group>"; usesTabs = 1; };
+		D9264BE9304D534C00D503F0 /* SIMASVariable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIMASVariable.m; sourceTree = "<group>"; usesTabs = 0; };
 		D9264BEB304D592E00D503F0 /* SIMASStandardLibrary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIMASStandardLibrary.h; sourceTree = "<group>"; };
 		D9264BEC304D592E00D503F0 /* SIMASStandardLibrary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIMASStandardLibrary.m; sourceTree = "<group>"; };
 		D9264BF1304D594800D503F0 /* SIMASRuntime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIMASRuntime.h; sourceTree = "<group>"; };
 		D9264BF2304D594800D503F0 /* SIMASRuntime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIMASRuntime.m; sourceTree = "<group>"; };
 		D9264BF4304E05FA00D503F0 /* SIMASFunction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIMASFunction.h; sourceTree = "<group>"; };
 		D9264BF5304E05FA00D503F0 /* SIMASFunction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIMASFunction.m; sourceTree = "<group>"; };
-		D9264C13304E375000D503F0 /* listeria.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = listeria.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		D9264C15304E375000D503F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D9264C19304E377000D503F0 /* SIMASList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIMASList.h; sourceTree = "<group>"; };
 		D9264C1A304E377000D503F0 /* SIMASList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIMASList.m; sourceTree = "<group>"; };
+		D9264C1C304F97F900D503F0 /* DOCS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DOCS.md; sourceTree = "<group>"; };
+		D9264C1D304F97F900D503F0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D9264C1E3051870200D503F0 /* SIMASCommandLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIMASCommandLine.h; sourceTree = "<group>"; };
+		D9264C1F3051870200D503F0 /* SIMASCommandLine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIMASCommandLine.m; sourceTree = "<group>"; };
+		D9264C2330518C7800D503F0 /* LIBRARIES.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LIBRARIES.md; sourceTree = "<group>"; };
+		D9264C2B3051914B00D503F0 /* libsimas_runtime.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libsimas_runtime.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,10 +58,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9264C353051915700D503F0 /* libsimas_runtime.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D9264C10304E375000D503F0 /* Frameworks */ = {
+		D9264C293051914B00D503F0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -65,10 +75,12 @@
 		D9264BD5304D528000D503F0 = {
 			isa = PBXGroup;
 			children = (
-				D9264C0E304E373A00D503F0 /* lists */,
+				D9264C2430518EFA00D503F0 /* runtime */,
 				D9264BE0304D528000D503F0 /* objectivismas */,
-				D9264C14304E375000D503F0 /* listeria */,
 				D9264BDF304D528000D503F0 /* Products */,
+				D9264C1C304F97F900D503F0 /* DOCS.md */,
+				D9264C1D304F97F900D503F0 /* README.md */,
+				D9264C2330518C7800D503F0 /* LIBRARIES.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -76,7 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				D9264BDE304D528000D503F0 /* objectivismas */,
-				D9264C13304E375000D503F0 /* listeria.bundle */,
+				D9264C2B3051914B00D503F0 /* libsimas_runtime.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -84,37 +96,76 @@
 		D9264BE0304D528000D503F0 /* objectivismas */ = {
 			isa = PBXGroup;
 			children = (
-				D9264BE1304D528000D503F0 /* main.m */,
-				D9264BE8304D534C00D503F0 /* SIMASVariable.h */,
-				D9264BE9304D534C00D503F0 /* SIMASVariable.m */,
-				D9264BF1304D594800D503F0 /* SIMASRuntime.h */,
-				D9264BF2304D594800D503F0 /* SIMASRuntime.m */,
-				D9264BF4304E05FA00D503F0 /* SIMASFunction.h */,
-				D9264BF5304E05FA00D503F0 /* SIMASFunction.m */,
-				D9264BEB304D592E00D503F0 /* SIMASStandardLibrary.h */,
-				D9264BEC304D592E00D503F0 /* SIMASStandardLibrary.m */,
+				D9264C3F305192DF00D503F0 /* src */,
+				D9264C3E305192C100D503F0 /* headers */,
 			);
 			path = objectivismas;
 			sourceTree = "<group>";
 		};
-		D9264C0E304E373A00D503F0 /* lists */ = {
+		D9264C2430518EFA00D503F0 /* runtime */ = {
+			isa = PBXGroup;
+			children = (
+				D9264C3C305191BD00D503F0 /* headers */,
+				D9264C3D305191CC00D503F0 /* src */,
+			);
+			path = runtime;
+			sourceTree = "<group>";
+		};
+		D9264C3C305191BD00D503F0 /* headers */ = {
+			isa = PBXGroup;
+			children = (
+				D9264BE8304D534C00D503F0 /* SIMASVariable.h */,
+				D9264BF1304D594800D503F0 /* SIMASRuntime.h */,
+				D9264BF4304E05FA00D503F0 /* SIMASFunction.h */,
+			);
+			path = headers;
+			sourceTree = "<group>";
+		};
+		D9264C3D305191CC00D503F0 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				D9264BE9304D534C00D503F0 /* SIMASVariable.m */,
+				D9264BF2304D594800D503F0 /* SIMASRuntime.m */,
+				D9264BF5304E05FA00D503F0 /* SIMASFunction.m */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		D9264C3E305192C100D503F0 /* headers */ = {
 			isa = PBXGroup;
 			children = (
 				D9264C19304E377000D503F0 /* SIMASList.h */,
-				D9264C1A304E377000D503F0 /* SIMASList.m */,
+				D9264BEB304D592E00D503F0 /* SIMASStandardLibrary.h */,
+				D9264C1E3051870200D503F0 /* SIMASCommandLine.h */,
 			);
-			path = lists;
+			path = headers;
 			sourceTree = "<group>";
 		};
-		D9264C14304E375000D503F0 /* listeria */ = {
+		D9264C3F305192DF00D503F0 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				D9264C15304E375000D503F0 /* Info.plist */,
+				D9264C1A304E377000D503F0 /* SIMASList.m */,
+				D9264BE1304D528000D503F0 /* main.m */,
+				D9264BEC304D592E00D503F0 /* SIMASStandardLibrary.m */,
+				D9264C1F3051870200D503F0 /* SIMASCommandLine.m */,
 			);
-			path = listeria;
+			path = src;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D9264C273051914B00D503F0 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9264C3A3051916200D503F0 /* SIMASFunction.h in Headers */,
+				D9264C383051916200D503F0 /* SIMASRuntime.h in Headers */,
+				D9264C363051916200D503F0 /* SIMASVariable.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		D9264BDD304D528000D503F0 /* objectivismas */ = {
@@ -134,22 +185,22 @@
 			productReference = D9264BDE304D528000D503F0 /* objectivismas */;
 			productType = "com.apple.product-type.tool";
 		};
-		D9264C12304E375000D503F0 /* listeria */ = {
+		D9264C2A3051914B00D503F0 /* simas_runtime */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D9264C16304E375000D503F0 /* Build configuration list for PBXNativeTarget "listeria" */;
+			buildConfigurationList = D9264C313051914B00D503F0 /* Build configuration list for PBXNativeTarget "simas_runtime" */;
 			buildPhases = (
-				D9264C0F304E375000D503F0 /* Sources */,
-				D9264C10304E375000D503F0 /* Frameworks */,
-				D9264C11304E375000D503F0 /* Resources */,
+				D9264C273051914B00D503F0 /* Headers */,
+				D9264C283051914B00D503F0 /* Sources */,
+				D9264C293051914B00D503F0 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = listeria;
-			productName = listeria;
-			productReference = D9264C13304E375000D503F0 /* listeria.bundle */;
-			productType = "com.apple.product-type.bundle";
+			name = simas_runtime;
+			productName = simas_runtime;
+			productReference = D9264C2B3051914B00D503F0 /* libsimas_runtime.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
@@ -163,13 +214,13 @@
 					D9264BDD304D528000D503F0 = {
 						CreatedOnToolsVersion = 10.3;
 					};
-					D9264C12304E375000D503F0 = {
+					D9264C2A3051914B00D503F0 = {
 						CreatedOnToolsVersion = 10.3;
 					};
 				};
 			};
 			buildConfigurationList = D9264BD9304D528000D503F0 /* Build configuration list for PBXProject "objectivismas" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -181,39 +232,30 @@
 			projectRoot = "";
 			targets = (
 				D9264BDD304D528000D503F0 /* objectivismas */,
-				D9264C12304E375000D503F0 /* listeria */,
+				D9264C2A3051914B00D503F0 /* simas_runtime */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		D9264C11304E375000D503F0 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D9264BDA304D528000D503F0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9264C0D304E123500D503F0 /* SIMASFunction.m in Sources */,
 				D9264BE2304D528000D503F0 /* main.m in Sources */,
 				D9264BED304D592E00D503F0 /* SIMASStandardLibrary.m in Sources */,
-				D9264C0C304E123500D503F0 /* SIMASRuntime.m in Sources */,
-				D9264C0B304E123500D503F0 /* SIMASVariable.m in Sources */,
+				D9264C223051872A00D503F0 /* SIMASList.m in Sources */,
+				D9264C203051870200D503F0 /* SIMASCommandLine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D9264C0F304E375000D503F0 /* Sources */ = {
+		D9264C283051914B00D503F0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9264C1B304E377000D503F0 /* SIMASList.m in Sources */,
+				D9264C3B3051916200D503F0 /* SIMASFunction.m in Sources */,
+				D9264C393051916200D503F0 /* SIMASRuntime.m in Sources */,
+				D9264C373051916200D503F0 /* SIMASVariable.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,7 +313,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = ./objectivismas;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/runtime/headers";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -325,7 +367,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = ./objectivismas;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/runtime/headers";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -337,6 +379,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/runtime/headers",
+					"$(SRCROOT)/objectivismas/headers",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -345,67 +391,43 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/runtime/headers",
+					"$(SRCROOT)/objectivismas/headers",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
-		D9264C17304E375000D503F0 /* Debug */ = {
+		D9264C323051914B00D503F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = listeria/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				OTHER_LDFLAGS = (
-					"-Wl,-flat_namespace",
-					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
-					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
-					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
-					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
-					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
-					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
-					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
-					"-Wl,-undefined,dynamic_lookup",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.xandergomez.listeria;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/runtime/headers";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
 		};
-		D9264C18304E375000D503F0 /* Release */ = {
+		D9264C333051914B00D503F0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = listeria/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				OTHER_LDFLAGS = (
-					"-Wl,-flat_namespace",
-					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
-					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
-					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
-					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
-					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
-					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
-					"-Wl,-undefined,dynamic_lookup\n-Wl,-flat_namespace",
-					"-Wl,-undefined,dynamic_lookup",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.xandergomez.listeria;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/runtime/headers";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
 		};
@@ -430,11 +452,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D9264C16304E375000D503F0 /* Build configuration list for PBXNativeTarget "listeria" */ = {
+		D9264C313051914B00D503F0 /* Build configuration list for PBXNativeTarget "simas_runtime" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D9264C17304E375000D503F0 /* Debug */,
-				D9264C18304E375000D503F0 /* Release */,
+				D9264C323051914B00D503F0 /* Debug */,
+				D9264C333051914B00D503F0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

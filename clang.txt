@@ -1,0 +1,44 @@
+fun hanoi 4;
+
+set num zero 0;
+set num one 1;
+
+copy $1 hanoi_check;
+eqc num hanoi_check 0;
+jumpv hanoi_done hanoi_check;
+
+sub num $1 one;
+
+call hanoi v $1 v $2 v $4 v $3;
+
+add num $1 one;
+
+printc "Move disk ";
+print $1;
+printc " from ";
+print $2;
+printc " to ";
+print $3;
+println;
+
+sub num $1 one;
+
+call hanoi v $1 v $4 v $3 v $2;
+
+label hanoi_done;
+ret;
+
+end fun;
+
+
+set num disks 5;
+set str source "A";
+set str destination "C";
+set str auxiliary "B";
+
+printc "Tower of Hanoi with 5 disks:";
+println;
+
+call hanoi v disks v source v destination v auxiliary;
+
+quit;

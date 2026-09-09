@@ -1,5 +1,5 @@
 ## DOCUMENTATION 
-### DATA TYPES 
+### INCLUDED DATA TYPES 
 #### - bool : a boolean value.
 #### - num  : a number, can be an integer or a float
 #### - str  : a string of characters
@@ -26,7 +26,7 @@
 * OPERAND 1: name of the label
 
 ### Math
-Note: ALL math ops require both operands going in must be NUM type, and OPERAND 1 must be `num` if you wish to retain SIMASJS compatibility. 
+Note: If aiming for SIMASJS compatibility, ALL math ops require both operands going in must be NUM type and OPERAND 1 must be `num`. 
 
 #### - add
 * add the value of OPERAND 2 and 3 - the value will be assigned to OPERAND 2
@@ -190,7 +190,7 @@ Note: All comparison operators will OVERWRITE the FIRST variable passed in. Plea
     * `list acc`
         * access one or more items from a list and store them in one or more variables
         * OPERAND 3: the index, starting from 1
-        * OPERAND 4+: the name of the variable(s) that you want to store the value(s) in.
+        * OPERAND 4+: the name of the variable(s) that you want to store the value in.
     * `list show`
         * print out the entire list to the standard output
     * `list dump`
@@ -198,12 +198,11 @@ Note: All comparison operators will OVERWRITE the FIRST variable passed in. Plea
         * OPERAND 3: file name
     * `list load`
         * loads a list from a file
-        * OPERAND 3: the name of the list you want to store to
-        * OPERAND 4: file name
+        * OPERAND 3: file name
     * `list len`
         * returns the number of elements in a list
         * OPERAND 3: the name of the variable to store the value in
-    * `list copy` (also can be `COPYL`)
+    * `list copy` (same function works with just copy, however, this is also supported for the sake of SIMASJS and CMAS compatibility)
         * copies a list's contents into another list
         * OPERAND 3: the destination list to recieve the data of OPERAND 2.
 
@@ -222,7 +221,6 @@ Note: All comparison operators will OVERWRITE the FIRST variable passed in. Plea
 
 #### - prints
 * print a space
-* This is useful in cases where you may need to print something right after using ```print```.
 
 ### Functions
 Note: Unlike labels, functions must be defined prior to use.
@@ -236,8 +234,8 @@ Note: Unlike labels, functions must be defined prior to use.
 #### - call
 * call a function
 * OPERAND 1: The name of the function of which to execute
-* OPERAND 2 (and every even-numbered operand hereon): Only needed if function takes args. The type of data that the arg passed is. V for a pre-existing variable, L is for a pre-existing list, 
-B for a boolean constant, N for a NUM constant, P for a POINTER to a variable, A for an ALIAS to a list, and S for a string constant.
+* OPERAND 2 (and every even-numbered operand hereon): Only needed if function takes args. The type of data that the arg passed is. V for a pre-existing variable, P for a POINTER to a variable, 
+otherwise put the name of the type, and then the data for that variable as a constant.
 * OPERAND 3 (and every odd-numbered operand hereon): Only needed if function takes args. The data of the passed argument.
 
 #### - end fun
@@ -275,7 +273,7 @@ B for a boolean constant, N for a NUM constant, P for a POINTER to a variable, A
 * assign a value to a variable.
 * OPERAND 1: the type of value. If the operand here is "in", then the value of the user input will be stored at this variable, with `str` type
 * OPERAND 2: the name of the variable
-* OPERAND 3: the value you wish to assign, if not using "in" as OPERAND 1. If using "in' as OPERAND 1, this is instead optional, and is the number of characters accepted (255 if unspecified). 
+* OPERAND 3: the value you wish to assign, if not using "in" as OPERAND 1. If using "in' as OPERAND 1, this is instead optional and ignored.
 
 #### - type
 * get the type of a variable
@@ -287,3 +285,9 @@ B for a boolean constant, N for a NUM constant, P for a POINTER to a variable, A
 * Note: this also includes all variable names and labels, so make sure to not redefine variables, list names, functions, etc. You may also only import a file once.
 * Note 2: import file pathing is relative to where you are RUNNING SIMAS from, NOT where your SIMAS file is.
 * OPERAND 1: the file path
+
+#### - utilising
+* load a SIMAS library
+* OPERAND 1: the library to load (.bundle format)
+* OPERAND 2 (optional, but required if operand 3 is present): as (no, like just the word as)
+* OPERAND 3: the prefix to apply to operations of the library
