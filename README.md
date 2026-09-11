@@ -57,6 +57,6 @@ and MUST be kept in mind if attempting to write cross-compatible programs.
 #### Known Objective-CMAS exclusive features:
 * Libraries - Objective-CMAS is currently the only known SIMAS implementation to support the inclusion of SIMAS libraries, adding new instructions or types.
 * Type addition - Objective-CMAS is not locked to the included types, libraries can add their own types.
-
+* `in` variable - Parameters named `in` (used in place of a standard variable name, but not a constant) will automatically grab input from the user (and coerce if necessary). Hence, this name is also reserved.
 # Links
 For instructions & datatypes, check <a href="DOCS.md">here.</a>
