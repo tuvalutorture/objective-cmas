@@ -5,6 +5,38 @@
 #### - str  : a string of characters
 ### INSTRUCTIONS
 
+### General Variables
+
+#### - not
+* negation logical operator
+* OPERAND 1: name of the variable to be negated (overwritten with a BOOL)
+
+#### - conv
+* Convert to a different data type
+* OPERAND 1: name of variable
+* OPERAND 2: target data type
+
+#### - copy
+* copy a variable's value to another
+* OPERAND 1: the name of the variable copying from
+* OPERAND 2: the name of the variable copying to
+
+#### - set
+* assign a value to a variable.
+* Note: the OPERAND 1 option is mostly irrelevant, as you can use `set str variable in`  and achieve similar results, though it is retained for compatibility.
+* OPERAND 1: the type of value. If the operand here is "in", then the value of the user input will be stored at this variable, with `str` type 
+* OPERAND 2: the name of the variable
+* OPERAND 3: the value you wish to assign, if not using "in" as OPERAND 1. If using "in' as OPERAND 1, this is instead optional and ignored.
+
+#### - type
+* get the type of a variable
+* OPERAND 1: the variable name
+* OPERAND 2: the type of OPERAND 1 will be assigned to this variable as a string
+
+#### - xchg
+* exchange the values of two variables
+* OPERAND 1 & 2: the variables to be exchanged
+
 ### Control Flow
 
 #### - jump
@@ -165,7 +197,7 @@ Note: All comparison operators will OVERWRITE the FIRST variable passed in. Plea
 * OPERAND 2: the name of the list to perform the operation on
 * All of the list operations:
     * `list new`
-        * creates a new list
+        * creates a new list (Note: if data is already present in the variable, it will be replaced!)
     * `list appv`
         * append a variable to a list
         * OPERAND 3: data type of the variable(s) (this operand is ignored in CMAS, but must be there to retain structure & compatibility)
@@ -252,33 +284,8 @@ otherwise put the name of the type, and then the data for that variable as a con
 #### - @ (comment)
 * all code after @ in the current line is ignored. comments must also end in a semicolon.
 
-#### - not
-* negation logical operator
-* OPERAND 1: name of the variable to be negated (overwritten with a BOOL)
-
-#### - conv
-* Convert to a different data type
-* OPERAND 1: name of variable
-* OPERAND 2: target data type
-
-#### - copy
-* copy a variable's value to another
-* OPERAND 1: the name of the variable copying from
-* OPERAND 2: the name of the variable copying to
-
 #### - quit
 * quits the program
-
-#### - set
-* assign a value to a variable.
-* OPERAND 1: the type of value. If the operand here is "in", then the value of the user input will be stored at this variable, with `str` type
-* OPERAND 2: the name of the variable
-* OPERAND 3: the value you wish to assign, if not using "in" as OPERAND 1. If using "in' as OPERAND 1, this is instead optional and ignored.
-
-#### - type
-* get the type of a variable
-* OPERAND 1: the variable name
-* OPERAND 2: the type of OPERAND 1 will be assigned to this variable as a string
 
 #### - import
 * import another SIMAS file
