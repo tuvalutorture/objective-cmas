@@ -15,6 +15,8 @@
 //  I HAVE NOT SLEPT FOR 2 DAYS SINCE I STARTED WRITING THIS
 //  THE CRYING WALLS OF SLIDING ARCHITECTURE ARE REAL
 //  ---...---
+//
+//  SYSTEM OF A DOWN - THIS COCAINE MAKES ME FEEL LIKE I'M ON THIS SONG
 
 #import "SIMASRuntime.h"
 #import "SIMASFunction.h"
@@ -37,6 +39,16 @@ NSString *unformatEscapes(NSString* str) {
     return string;
 }
 
+static int countBackslashes(NSString* string) {
+    if ([string length] < 1) return 0;
+    int backSlashes = 0;
+    for (int i = (int)[string length] - 1; i >= 0; i--) {
+        if ([string characterAtIndex:i] == '\\') backSlashes++;
+        else return backSlashes;
+    }
+    return backSlashes;
+}
+
 NSArray *tokeniseStringExcludingQuotes(NSString* str, NSCharacterSet* charSet) {
     NSMutableArray *objects = [[str componentsSeparatedByString:@"\""] mutableCopy];
     NSMutableArray *quoted = [NSMutableArray new];
@@ -47,20 +59,24 @@ NSArray *tokeniseStringExcludingQuotes(NSString* str, NSCharacterSet* charSet) {
     while ([objects count]) {
         NSMutableString *string = [[objects objectAtIndex:0] mutableCopy];
         [objects removeObjectAtIndex:0];
-        while ([string length] && [objects count] && isInQuotes) {
-            int backSlashes = 0; BOOL isEvenBackslashes = NO;
-            for (int i = (int)[string length] - 1; i >= 0; i--) {
-                if ([string characterAtIndex:i] == '\\') backSlashes++;
-                else { isEvenBackslashes = !(backSlashes % 2); break; }
-            }
+        int backSlashes = 0; BOOL isEvenBackslashes = NO;
+        if (![string length] && [objects count] && isInQuotes) {
             quoteIndexes[index] = 1;
-            if (!isEvenBackslashes && backSlashes) {
-                [string appendString:@"\""];
-                [string appendString:[objects objectAtIndex:0]];
-                [objects removeObjectAtIndex:0];
-                continue;
+            [objects removeObjectAtIndex:0];
+        } else {
+            while ([objects count]) {
+                isEvenBackslashes = !((backSlashes = countBackslashes(string)) % 2);
+                quoteIndexes[index] = isInQuotes;
+                if (!isEvenBackslashes && backSlashes) {
+                    [string appendString:@"\""];
+                    [string appendString:[objects objectAtIndex:0]];
+                    [objects removeObjectAtIndex:0];
+                    continue;
+                }
+                break;
             }
-            break;
+            
+            isInQuotes = NO;
         }
         isInQuotes = !isInQuotes;
         [quoted addObject:string];
@@ -76,6 +92,7 @@ NSArray *tokeniseStringExcludingQuotes(NSString* str, NSCharacterSet* charSet) {
         if (!quoteIndexes[index++]) {
             NSMutableArray *sliced = [[string componentsSeparatedByCharactersInSet:charSet] mutableCopy];
             for (int i = 0; i < [sliced count]; i++) {
+                [sliced replaceObjectAtIndex:i withObject:[[sliced objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
                 if ([[sliced objectAtIndex:i] length] < 1) [sliced removeObjectAtIndex:i--];
             }
             if ([sliced count]) [objects addObjectsFromArray:sliced];
@@ -219,8 +236,10 @@ NSArray *tokeniseStringExcludingQuotes(NSString* str, NSCharacterSet* charSet) {
         NSAutoreleasePool *pool = [NSAutoreleasePool new];
         NSMutableCharacterSet *characters = [NSMutableCharacterSet whitespaceAndNewlineCharacterSet];
         [characters addCharactersInString:@";"];
-        NSArray *tokenised = tokeniseStringExcludingQuotes([instructionStrings objectAtIndex:0], characters);
-        if ([tokenised count] && [[tokenised objectAtIndex:0] length] && [[tokenised objectAtIndex:0] characterAtIndex:0] != '@')[tokens addObject:tokenised];
+        NSString *str = [[[instructionStrings objectAtIndex:0] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByAppendingString:@";"];
+        if ([str length] && [str characterAtIndex:0] == '@') { [pool release]; continue; }
+        NSArray *tokenised = tokeniseStringExcludingQuotes(str, characters);
+        if ([tokenised count] && [[tokenised objectAtIndex:0] length])[tokens addObject:tokenised];
         [instructionStrings removeObjectAtIndex:0];
         [pool release];
     }
@@ -235,11 +254,13 @@ NSArray *tokeniseStringExcludingQuotes(NSString* str, NSCharacterSet* charSet) {
         if (![string count]) { [string release]; continue; }
         SIMASOperation *operation;
         if ([[[string objectAtIndex:0] lowercaseString] isEqualToString:@"utilising"]) {
-            if ([string count] == 3) [SIMASRuntime throwException:@"IllegalArgumentCount" withReason:[NSString stringWithFormat:@"The provided instruction does not contain enough arguments (either 2 or 4, got 3) for instruction utilise."]];
+            if ([string count] == 3) [SIMASRuntime throwException:@"IllegalArgumentCount"
+                                                       withReason:[NSString stringWithFormat:@"The provided instruction does not contain enough arguments (either 2 or 4, got 3) for instruction utilise."]
+                                                  withSnideRemark:@"like... utilising it as WHAT, buddy? \"as\" and then jack shit doesn't tell me ANYTHING i need to know, after all"];
             NSString *libName = [string objectAtIndex:1];
-            NSString *prefix = [string count] == 4 && [[[string objectAtIndex:2] lowercaseString] isEqualToString:@"as"] ? [string objectAtIndex:3] : nil;
+            NSString *prefix = [string count] == 4 && [[[string objectAtIndex:2] lowercaseString] isEqualToString:@"as"] ? [string objectAtIndex:3] : @"";
             NSBundle *bundle = [NSBundle bundleWithPath:libName];
-            if (bundle && ![[SIMASRuntime runtime] isExcepted]) [[SIMASRuntime runtime] loadLibrary:bundle withPrefix:prefix];
+            if (bundle && ![[SIMASRuntime runtime] isExcepted]) [[SIMASRuntime runtime] loadLibrary:bundle withPrefix:[prefix lowercaseString]];
             [string release];
             if ([[SIMASRuntime runtime] isExcepted]) return nil;
             continue;
@@ -321,20 +342,6 @@ NSArray *tokeniseStringExcludingQuotes(NSString* str, NSCharacterSet* charSet) {
     return self;
 }
 
-- (SIMASVariable*)locateVariable:(NSString*)name { // methods which call this should handle nil
-    if ([name characterAtIndex:0] == '$') {
-        NSString *cut = [name substringFromIndex:1];
-        if (isnumber([cut characterAtIndex:0]) && [cut characterAtIndex:0] != '0') {
-            int stackIndex = [cut intValue];
-            if (![stack count]) return nil;
-            if ([stack count] - 1 - stackIndex < 0) return nil;
-            if (stackIndex > ((SIMASStackFrame*)[stack lastObject])->function->argumentCount) return nil;
-            return [stack objectAtIndex:([stack count] - 1 - stackIndex)];
-        }
-        else return [variables objectForKey:name];
-    } else return [variables objectForKey:name];
-}
-
 + (SIMASProgram*)loadFromString:(NSString*)string {
     SIMASProgram *newProgram = [SIMASProgram new];
     newProgram->instructions = [[SIMASInstruction parseInstructionsFromString:string] retain];
@@ -360,14 +367,23 @@ id getStackFrame(NSArray* args) {
     return [[SIMASRuntime currentProgram]->stack lastObject];
 }
 
+static SIMASRuntime** theRealRuntime() { // secret scary illegal functionality nobody must know about because if they did then the runtime is fucked. not much better than a global var but shhhshhshshsh it's fine
+    static SIMASRuntime* runtime = nil;
+    return &runtime;
+}
+
 @implementation SIMASRuntime
 - (id)init {
     self = [super init];
-    if (self) {
+    if (self && *theRealRuntime() == nil) {
+        *theRealRuntime() = self; // holy pointer dance batman
         registeredClasses = [NSMutableDictionary new];
         registeredTypes = [NSMutableDictionary new];
         registeredOperations = [NSMutableDictionary new];
         NSAutoreleasePool *pool = [NSAutoreleasePool new];
+        [SIMASBoolean registerToRuntime]; // evil shitty code that automatically calls [SIMASRuntime runtime] would create infinite loop without theRealRuntime indirection and sentinel and kill the fucking stack before the runtime even spawns into existence
+        [SIMASNumber registerToRuntime];
+        [SIMASString registerToRuntime];
         SIMASOperation *thing;
         thing = [SIMASOperation makeWithFunction:importNop];
         [thing setArgRange:1 toMaximum:1];
@@ -391,17 +407,28 @@ id getStackFrame(NSArray* args) {
         [thing setMaxArgs:3];
         [self registerOperation:thing withName:@"ret" withPrefix:@""];
         [pool release];
+        return self;
+    } else {
+        [self release];
+        return *theRealRuntime();
     }
-    return self;
 }
+
 + (SIMASRuntime*)runtime {
-    static SIMASRuntime* runtime = nil;
-    if (runtime == nil) runtime = [SIMASRuntime new];
+    SIMASRuntime* runtime = *theRealRuntime();
+    if (!runtime) runtime = [SIMASRuntime new];
     return runtime;
 }
+
 + (SIMASProgram*)currentProgram {
     return [self runtime]->currentProgram;
 }
+
++ (NSString*)userInput {
+    fflush(stdout);
+    return [[[[NSString alloc] initWithData:[[NSFileHandle fileHandleWithStandardInput] availableData] encoding:NSASCIIStringEncoding] autorelease] stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+}
+
 + (void)throwException:(NSString*)exception withReason:(NSString*)reason {
     SIMASRuntime *theRuntime = [SIMASRuntime runtime];
     SIMASProgram *program = [SIMASRuntime currentProgram];

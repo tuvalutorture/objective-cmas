@@ -5,20 +5,40 @@
 //  Created by Xander Gomez on 9/6/26.
 //  Copyright © 2026 Xander Gomez. All rights reserved.
 //
+//  go, now, if you want it
+//  an otherworld awaits you
+//  don't you give up on it
+//  you bite the hand that feeds you
+//
+//  all alone, cold fields you wander
+//  memories of it
+//  cloud your sight
+//  fills your dreams
+//  disturbs your slumber
+//  lost your way, a fallen knight...
+//
+//  hold now, aim is steady
+//  an otherworld awaits you
+//  one thousand years, you ready?
+//  the otherworld, it takes you
+//
+//  go
+//  into the sand and the dust in the sky
+//  go now
+//  there's no better plan
+//  than to do or to die
+//
+//  free me,
+//  pray to the fayth,
+//  in the face of the light
+//
+//  feed me
+//  fill me with sin
+//  and get ready to fight
 
 #import <Foundation/Foundation.h>
 
 @class SIMASVariable;
-
-typedef struct {
-    SIMASVariable *firstVariable, *secondVariable;
-    double firstOperand, secondOperand;
-} SIMASNumberOperationSetup;
-
-typedef struct {
-    SIMASVariable *firstVariable, *secondVariable;
-    BOOL firstOperand, secondOperand;
-} SIMASBooleanOperationSetup;
 
 @interface SIMASConversion : NSObject
 + (Class)sourceType; // change this to return whatever class your SOURCE should be, i.e. [SIMASNumber class]
@@ -53,6 +73,7 @@ typedef struct {
     SIMASData *data;
 }
 + (SIMASVariable*)makeVariable:(NSString*)name; // convenience method to automatically make a variable and add it to the existing varmap (nil if exception), requires program to be running in runtime. automatically returns one if one exists of same name
++ (SIMASVariable*)findVariable:(NSString*)name;
 
 - (void)setWithVariable:(SIMASVariable*)var;
 
@@ -84,14 +105,6 @@ typedef struct {
 + (SIMASBoolean*)booleanWithString:(NSString*)str;
 + (SIMASBoolean*)booleanWithBoolean:(BOOL)boolean;
 
-+ (SIMASBooleanOperationSetup)setupOperation:(NSArray*)args;
-
-+ (void)logicalOr:(NSArray*)args;
-+ (void)logicalAnd:(NSArray*)args;
-+ (void)logicalXor:(NSArray*)args;
-+ (void)logicalNor:(NSArray*)args;
-+ (void)logicalNand:(NSArray*)args;
-
 - (void)negate;
 
 - (void)setBoolValue:(BOOL)boolValue;
@@ -111,13 +124,6 @@ typedef struct {
 + (SIMASNumber*)numberWithNumber:(double)number;
 + (SIMASNumber*)numberWithString:(NSString*)str;
 + (SIMASNumber*)numberWithBoolean:(BOOL)boolean;
-
-+ (void)add:(NSArray*)args;
-+ (void)subtract:(NSArray*)args;
-+ (void)multiply:(NSArray*)args;
-+ (void)divide:(NSArray*)args;
-
-+ (SIMASNumberOperationSetup)setupOperation:(NSArray*)args;
 
 - (SIMASBoolean*)greaterThan:(SIMASNumber*)number;
 - (SIMASBoolean*)greaterThanOrEqualTo:(SIMASNumber*)number;

@@ -5,6 +5,60 @@
 //  Created by Xander Gomez on 9/6/26.
 //  Copyright © 2026 Xander Gomez. All rights reserved.
 //
+//  how does the brain
+//  connect with the body?
+//  how does it wake from a dream?
+//
+//  go
+//  book another show
+//  i don't want to know what's happening
+//
+//  i'm not here with you
+//  i see your lips are moving too
+//
+//  and they can talk and talk
+//  i think we might be having a blast
+//
+//  presently, i'm gone
+//  somewhere on a long celestial sleepwalk
+//
+//  how do you make
+//  a life out of nothing?
+//  make nothing out of your life?
+//
+//  blake,
+//  i don't want to wake
+//  i just want to take siestas all day
+//
+//  i say stop the war
+//
+//  ah, but I still want to have my car
+//  so i can drink and drive
+//
+//  i can't believe i'm still alive
+//
+//  talking on the phone
+//  asking if we had a good time last night
+//
+//  how does the brain
+//  connect with the body?
+//  how does it wake from a dream?
+//
+//  do-do-do-do-do while or sm shit
+//
+//  and we will hurt nobody
+//  for the love of money
+//  we can find our way
+//  without so much pain
+//
+//  take me there
+//  take me honey
+//  let me love you again
+//
+//  queue the part that's the mac os x leopard intro music
+//  and fuckin' vibe to that shit cause holy fUCK did they cook
+//
+//  honeycut - exodus honey
 
 #import "SIMASList.h"
 
@@ -15,12 +69,19 @@ SIMASList *boilerplate(NSArray *args) {
     return [list data];
 }
 
+static BOOL eatShitIfArgIsInput(NSArray *args, int arg) {
+    if ([[[args objectAtIndex:arg] lowercaseString] isEqualToString:@"in"]) {
+        [SIMASRuntime throwException:@"IllegalValue" withReason:@"You cannot assign a value to the 'in' variable."];
+        return YES;
+    }
+    return NO;
+}
+
 SIMASFUNC(newList) {
     if ([[args objectAtIndex:0] characterAtIndex:0] == '$') { [SIMASRuntime throwException:@"IllegalName" withReason:@"List names cannot start with '$' (reserved)."]; return; }
-    if (SIMASGETVARIABLEWITHARGUMENT(0)) { [SIMASRuntime throwException:@"DuplicateName" withReason:[NSString stringWithFormat:@"List or variable %@ already exists.", [args objectAtIndex:0]]]; return; }
-    SIMASVariable *newList = [SIMASVariable new];
-    [newList setData:[SIMASList new]];
-    [[SIMASRuntime currentProgram]->variables setObject:[newList autorelease] forKey:[args objectAtIndex:0]];
+    if ([[[args objectAtIndex:0] lowercaseString] isEqualToString:@"in"]) { [SIMASRuntime throwException:@"IllegalName" withReason:@"List names cannot be 'in' (reserved)."]; return; }
+    SIMASVariable *newList = [SIMASVariable makeVariable:[args objectAtIndex:0]];
+    if (newList) [newList setData:[[SIMASList new] autorelease]];
 }
 
 SIMASFUNC(appv) {
@@ -101,6 +162,7 @@ SIMASFUNC(acc) {
     }
     index -= 1;
     for (int i = 2; i < [args count]; i++) {
+        if (eatShitIfArgIsInput(args, i)) return;
         SIMASVariable *var = [SIMASVariable makeVariable:[args objectAtIndex:i]];
         [var setData:[[target data] objectAtIndex:index] asCopy:YES];
     }
@@ -140,6 +202,7 @@ SIMASFUNC(lengthOfList) {
 }
 
 SIMASFUNC(listCopy) {
+    if (eatShitIfArgIsInput(args, 1)) return;
     SIMASList *target = boilerplate(args);
     if (!target) return;
     SIMASVariable *dest = SIMASGETVARIABLEWITHARGUMENT(1);
@@ -155,6 +218,7 @@ SIMASFUNC(listCopy) {
 }
 
 SIMASFUNC(makeAlias) {
+    if (eatShitIfArgIsInput(args, 1)) return;
     SIMASVariable *list = SIMASGETVARIABLEWITHARGUMENT(0);
     if (!list) { [SIMASRuntime throwException:@"NonexistentList" withReason:[NSString stringWithFormat:@"List %@ does not exist.", [args objectAtIndex:0]]]; return; }
     if (![[list data] isKindOfClass:[SIMASList class]]) { [SIMASRuntime throwException:@"IllegalType" withReason:[NSString stringWithFormat:@"Variable %@ is not a list.", [args objectAtIndex:0]]]; return; }

@@ -30,12 +30,141 @@
 //  Hell away
 //  No one sings like you anymore
 //  can the sun just fucking collapse into a black hole already
+//
+//  soundgarden - black hole sun
 
 #import "SIMASStandardLibrary.h"
 #import "SIMASVariable.h"
 #import "SIMASFunction.h"
 
+static BOOL eatShitIfArgIsInput(NSArray *args, int arg) {
+    if ([[[args objectAtIndex:arg] lowercaseString] isEqualToString:@"in"]) {
+        [SIMASRuntime throwException:@"IllegalValue" withReason:@"You cannot assign a value to the 'in' variable."];
+        return YES;
+    }
+    return NO;
+}
+
+typedef struct {
+    SIMASVariable *firstVariable, *secondVariable;
+    double firstOperand, secondOperand;
+} SIMASNumberOperationSetup;
+
+typedef struct {
+    SIMASVariable *firstVariable, *secondVariable;
+    BOOL firstOperand, secondOperand;
+} SIMASBooleanOperationSetup;
+
+@interface SIMASComparison : NSObject
++ (SIMASBooleanOperationSetup)setupOperation:(NSArray*)args;
+
++ (void)logicalOr:(NSArray*)args;
++ (void)logicalAnd:(NSArray*)args;
++ (void)logicalXor:(NSArray*)args;
++ (void)logicalNor:(NSArray*)args;
++ (void)logicalNand:(NSArray*)args;
+@end
+
+@implementation SIMASComparison
++ (SIMASBooleanOperationSetup)setupOperation:(NSArray*)args {
+    SIMASBooleanOperationSetup setup;
+    setup.firstVariable = nil;
+    setup.secondVariable = nil;
+    if (eatShitIfArgIsInput(args, 1)) return setup;
+    SIMASVariable *first = [SIMASVariable findVariable:[args objectAtIndex:1]];
+    if (first == nil) return setup; // error handling is downstream
+    SIMASVariable *secondVar = [SIMASVariable findVariable:[args objectAtIndex:2]];
+    BOOL firstOperand, secondOperand;
+    if (secondVar == nil) secondOperand = [[args objectAtIndex:2] boolValue];
+    else secondOperand = [[[secondVar data] getConverted:[SIMASBoolean class]] boolValue];
+    firstOperand = [[[first data] getConverted:[SIMASBoolean class]] boolValue];
+    setup.firstVariable = first;
+    setup.secondVariable = secondVar;
+    setup.firstOperand = firstOperand;
+    setup.secondOperand = secondOperand;
+    return setup;
+}
+
++ (void)logicalOr:(NSArray*)args {
+    SIMASBooleanOperationSetup setup = [self setupOperation:args];
+    if (setup.firstVariable) [setup.firstVariable setData:[[SIMASBoolean booleanWithBoolean:(setup.firstOperand || setup.secondOperand)] getConverted:SIMASGETTYPEWITHARGUMENT(0)]];
+}
++ (void)logicalAnd:(NSArray*)args {
+    SIMASBooleanOperationSetup setup = [self setupOperation:args];
+    if (setup.firstVariable) [setup.firstVariable setData:[[SIMASBoolean booleanWithBoolean:(setup.firstOperand && setup.secondOperand)] getConverted:SIMASGETTYPEWITHARGUMENT(0)]];
+}
++ (void)logicalXor:(NSArray*)args {
+    SIMASBooleanOperationSetup setup = [self setupOperation:args];
+    if (setup.firstVariable) [setup.firstVariable setData:[[SIMASBoolean booleanWithBoolean:(setup.firstOperand != setup.secondOperand)] getConverted:SIMASGETTYPEWITHARGUMENT(0)]];
+}
++ (void)logicalNor:(NSArray*)args {
+    SIMASBooleanOperationSetup setup = [self setupOperation:args];
+    if (setup.firstVariable) [setup.firstVariable setData:[[SIMASBoolean booleanWithBoolean:!(setup.firstOperand || setup.secondOperand)] getConverted:SIMASGETTYPEWITHARGUMENT(0)]];
+}
++ (void)logicalNand:(NSArray*)args {
+    SIMASBooleanOperationSetup setup = [self setupOperation:args];
+    if (setup.firstVariable) [setup.firstVariable setData:[[SIMASBoolean booleanWithBoolean:!(setup.firstOperand && setup.secondOperand)] getConverted:SIMASGETTYPEWITHARGUMENT(0)]];
+}
+@end
+
+@interface SIMASArithmetic : NSObject
++ (SIMASNumberOperationSetup)setupOperation:(NSArray*)args;
+
++ (void)add:(NSArray*)args;
++ (void)subtract:(NSArray*)args;
++ (void)multiply:(NSArray*)args;
++ (void)divide:(NSArray*)args;
+@end
+
+@implementation SIMASArithmetic
++ (SIMASNumberOperationSetup)setupOperation:(NSArray*)args {
+    SIMASNumberOperationSetup setup;
+    setup.firstVariable = nil;
+    setup.secondVariable = nil;
+    
+    double firstOperand, secondOperand;
+    if (eatShitIfArgIsInput(args, 1)) return setup;
+    SIMASVariable *first = [SIMASVariable findVariable:[args objectAtIndex:1]];
+    
+    if (first == nil) return setup; // error handling downstream
+    SIMASVariable *secondVar = [SIMASVariable findVariable:[args objectAtIndex:2]];
+   
+    if (secondVar == nil) secondOperand = [[args objectAtIndex:2] doubleValue];
+    else secondOperand = [[[secondVar data] getConverted:[SIMASNumber class]] doubleValue];
+    firstOperand = [[[first data] getConverted:[SIMASNumber class]] doubleValue];
+    
+    setup.firstVariable = first;
+    setup.secondVariable = secondVar;
+    setup.firstOperand = firstOperand;
+    setup.secondOperand = secondOperand;
+    
+    return setup;
+}
+
++ (void)add:(NSArray*)args {
+    SIMASNumberOperationSetup setup = [self setupOperation:args];
+    [setup.firstVariable setData:[[SIMASNumber numberWithNumber:(setup.firstOperand + setup.secondOperand)] getConverted:[[SIMASRuntime runtime]->registeredTypes objectForKey:[[args objectAtIndex:0] lowercaseString]]]]; // holy crap
+}
++ (void)subtract:(NSArray*)args {
+    SIMASNumberOperationSetup setup = [self setupOperation:args];
+    [setup.firstVariable setData:[[SIMASNumber numberWithNumber:(setup.firstOperand - setup.secondOperand)] getConverted:[[SIMASRuntime runtime]->registeredTypes objectForKey:[[args objectAtIndex:0] lowercaseString]]]]; // holy crap
+}
++ (void)multiply:(NSArray*)args {
+    SIMASNumberOperationSetup setup = [self setupOperation:args];
+    [setup.firstVariable setData:[[SIMASNumber numberWithNumber:(setup.firstOperand * setup.secondOperand)] getConverted:[[SIMASRuntime runtime]->registeredTypes objectForKey:[[args objectAtIndex:0] lowercaseString]]]]; // holy crap
+}
++ (void)divide:(NSArray*)args {
+    SIMASNumberOperationSetup setup = [self setupOperation:args];
+    if (setup.secondOperand == 0) [SIMASRuntime throwException:@"DivisionByZero" withReason:@"Division by zero is not allowed." withSnideRemark:@"man you are one stupid motherfucker innit? did the american education system fail you THAT hard holy shit 😂"];
+    else [setup.firstVariable setData:[[SIMASNumber numberWithNumber:(setup.firstOperand / setup.secondOperand)] getConverted:[[SIMASRuntime runtime]->registeredTypes objectForKey:[[args objectAtIndex:0] lowercaseString]]]]; // holy crap
+}
+@end
+
+SIMASCLASSMETHOD(SIMASArithmetic)
+SIMASCLASSMETHOD(SIMASComparison)
+
 SIMASFUNC(setVar) {
+    if (eatShitIfArgIsInput(args, 1)) return;
     NSString *name = [args objectAtIndex:1], *second = [args count] > 2 ? [args objectAtIndex:2] : nil;
     SIMASVariable *targetVar = [SIMASVariable makeVariable:name];
     if (!targetVar) return;
@@ -46,7 +175,7 @@ SIMASFUNC(setVar) {
     }
     if ([args count] < 3) [SIMASRuntime throwException:@"IllegalArgumentCount" withReason:[NSString stringWithFormat:@"The provided instruction does not contain enough arguments (must be 3, got 2) for instruction set."]];
     if (!SIMASGETTYPEWITHARGUMENT(0)) { [SIMASRuntime throwException:@"NonexistentType" withReason:[NSString stringWithFormat:@"Type %@ does not exist, thus cannot be used to convert.", [args objectAtIndex:0]]]; return; }
-    SIMASVariable *sourceVar = [[SIMASRuntime currentProgram] locateVariable:second];
+    SIMASVariable *sourceVar = [SIMASVariable findVariable:second];
     if (!sourceVar) [targetVar setData:[(Class)SIMASGETTYPEWITHARGUMENT(0) fromString:second]];
     else [targetVar setData:[[sourceVar data] getConverted:(Class)SIMASGETTYPEWITHARGUMENT(0)]];
 }
@@ -78,7 +207,8 @@ SIMASSELECTORMETHOD(st, @selector(lessThan:))
 SIMASSELECTORMETHOD(ste, @selector(lessThanOrEqualTo:))
 
 SIMASFUNC(functionsOfComparison) {
-    SIMASNumberOperationSetup setup = [SIMASNumber setupOperation:args];
+    if (eatShitIfArgIsInput(args, 1)) return;
+    SIMASNumberOperationSetup setup = [SIMASArithmetic setupOperation:args];
     if (!SIMASGETTYPEWITHARGUMENT(0)) { [SIMASRuntime throwException:@"NonexistentType" withReason:[NSString stringWithFormat:@"Type %@ does not exist, thus cannot be used to convert.", [args objectAtIndex:0]]]; return; }
     if (!setup.firstVariable) { [SIMASRuntime throwException:@"NonexistentVariable" withReason:[NSString stringWithFormat:@"Variable %@ does not exist, and the function which you are using it from does not implicitly create variables.", [args objectAtIndex:1]]]; return; }
     SIMASBoolean* (*function)(id, SEL, SIMASNumber*) = (SIMASBoolean*(*)(id, SEL, SIMASNumber*))[[setup.firstVariable data] methodForSelector:_cmd];
@@ -88,12 +218,14 @@ SIMASFUNC(functionsOfComparison) {
 }
 
 SIMASFUNC(negationProctation) {
+    if (eatShitIfArgIsInput(args, 0)) return;
     SIMASVariable *variable = SIMASGETVARIABLEWITHARGUMENT(0);
     if (!variable) { [SIMASRuntime throwException:@"NonexistentVariable" withReason:[NSString stringWithFormat:@"Variable %@ does not exist, and the function which you are using it from does not implicitly create variables.", [args objectAtIndex:0]]]; return; }
     [variable setData:[SIMASBoolean booleanWithBoolean:![[variable data] getConverted:[SIMASBoolean class]]]];
 }
 
 SIMASFUNC(equalityOfConst) {
+    if (eatShitIfArgIsInput(args, 1)) return;
     SIMASVariable *variable1 = SIMASGETVARIABLEWITHARGUMENT(1);
     if (!variable1) { [SIMASRuntime throwException:@"NonexistentVariable" withReason:[NSString stringWithFormat:@"Variable %@ does not exist, and the function which you are using it from does not implicitly create variables.", [args objectAtIndex:1]]]; return; }
     Class type = SIMASGETTYPEWITHARGUMENT(0);
@@ -103,23 +235,26 @@ SIMASFUNC(equalityOfConst) {
 }
 
 SIMASFUNC(inequalityOfConst) {
+    if (eatShitIfArgIsInput(args, 1)) return;
     equalityOfConst(self, _cmd, args);
     negationProctation(self, _cmd, [NSArray arrayWithObject:[args objectAtIndex:1]]);
 }
 
 SIMASFUNC(equalityOfVars) {
+    if (eatShitIfArgIsInput(args, 1)) return;
     SIMASVariable *variable1 = SIMASGETVARIABLEWITHARGUMENT(1);
-    SIMASVariable *variable2 = [[SIMASRuntime currentProgram] locateVariable:[args objectAtIndex:2]];
+    SIMASVariable *variable2 = [SIMASVariable findVariable:[args objectAtIndex:2]];
     if (!variable1 || !variable2) {
         [SIMASRuntime throwException:@"NonexistentVariable" withReason:[NSString stringWithFormat:@"Variable %@ does not exist, and the function which you are using it from does not implicitly create variables.", [args objectAtIndex:(variable1 != nil) + 1]]];
         return;
     }
     Class type = SIMASGETTYPEWITHARGUMENT(0);
     if (!type) [SIMASRuntime throwException:@"NonexistentType" withReason:[NSString stringWithFormat:@"Type %@ does not exist, thus cannot be used to convert.", [args objectAtIndex:0]]];
-    else [variable1 setData:[SIMASBoolean booleanWithBoolean:([[[variable1 data] getConverted:type] isEqualTo:[variable2 data]])]];
+    else [variable1 setData:[SIMASBoolean booleanWithBoolean:([[[variable1 data] getConverted:[[variable2 data] class]] isEqualTo:[variable2 data]])]];
 }
 
 SIMASFUNC(inequalityOfVars) {
+    if (eatShitIfArgIsInput(args, 1)) return;
     equalityOfVars(self, _cmd, args);
     negationProctation(self, _cmd, [NSArray arrayWithObject:[args objectAtIndex:1]]);
 }
@@ -131,6 +266,7 @@ SIMASFUNC(varType) {
 }
 
 SIMASFUNC(conversion) {
+    if (eatShitIfArgIsInput(args, 0)) return;
     SIMASVariable *variable1 = SIMASGETVARIABLEWITHARGUMENT(0);
     Class type = SIMASGETTYPEWITHARGUMENT(1);
     if (!variable1) { [SIMASRuntime throwException:@"NonexistentVariable" withReason:[NSString stringWithFormat:@"Variable %@ does not exist, and the function which you are using it from does not implicitly create variables.", [args objectAtIndex:0]]]; return; }
@@ -139,16 +275,19 @@ SIMASFUNC(conversion) {
 }
 
 SIMASFUNC(copying) {
+    if (eatShitIfArgIsInput(args, 1)) return;
     SIMASVariable *variable1 = SIMASGETVARIABLEWITHARGUMENT(0);
     if (!variable1) { [SIMASRuntime throwException:@"NonexistentVariable" withReason:[NSString stringWithFormat:@"Variable %@ does not exist, and the function which you are using it from does not implicitly create variables.", [args objectAtIndex:0]]]; return; }
     [[SIMASVariable makeVariable:[args objectAtIndex:1]] setData:[[[variable1 data] copy] autorelease]];
 }
 
 SIMASFUNC(pointationNotation) {
+    if (eatShitIfArgIsInput(args, 0)) return;
     SIMASVariable *variable1 = SIMASGETVARIABLEWITHARGUMENT(0);
     NSString* name = [args objectAtIndex:1];
     if (!variable1 || [name characterAtIndex:0] == '$' || [[args objectAtIndex:0] characterAtIndex:0] == '$') { [SIMASRuntime throwException:@"IllegalName" withReason:@"Variable names cannot start with '$' (reserved)."]; return; }
-    SIMASVariable *pointer = [[SIMASRuntime currentProgram] locateVariable:name];
+    if ([[[args objectAtIndex:1] lowercaseString] isEqualToString:@"in"]) { [SIMASRuntime throwException:@"IllegalName" withReason:@"Variable names cannot be 'in' (reserved)."]; return; }
+    SIMASVariable *pointer = [SIMASVariable findVariable:name];
     if (pointer) [[SIMASRuntime currentProgram]->variables removeObjectForKey:name];
     [[SIMASRuntime currentProgram]->variables setObject:[variable1 makePointer] forKey:name];
 }
@@ -176,6 +315,7 @@ SIMASFUNC(jumpButConditionallyButNot) {
 }
 
 SIMASFUNC(ebook) {
+    if (eatShitIfArgIsInput(args, 1)) return;
     NSString *data = [NSString stringWithContentsOfFile:[args objectAtIndex:0] encoding:NSASCIIStringEncoding error:nil];
     if (!data) { [SIMASRuntime throwException:@"ReadError" withReason:[NSString stringWithFormat:@"File %@ failed to read.", [args objectAtIndex:0]]]; return; }
     [[SIMASVariable makeVariable:[args objectAtIndex:1]] setData:[SIMASString stringWithString:data]];
@@ -195,13 +335,21 @@ SIMASFUNC(quit) {
     [SIMASRuntime quitProgram];
 }
 
+SIMASFUNC(xchg) {
+    if (eatShitIfArgIsInput(args, 0) || eatShitIfArgIsInput(args, 1)) return;
+    SIMASVariable *var1 = SIMASGETVARIABLEWITHARGUMENT(0), *var2 = SIMASGETVARIABLEWITHARGUMENT(1);
+    if (!var1) { [SIMASRuntime throwException:@"NonexistentVariable" withReason:[NSString stringWithFormat:@"Variable %@ does not exist, and the function which you are using it from does not implicitly create variables.", [args objectAtIndex:0]]]; return; }
+    if (!var2) { [SIMASRuntime throwException:@"NonexistentVariable" withReason:[NSString stringWithFormat:@"Variable %@ does not exist, and the function which you are using it from does not implicitly create variables.", [args objectAtIndex:1]]]; return; }
+    SIMASData *temp = [[var2 data] retain];
+    [var2 setData:[var1 data]];
+    [var1 setData:temp];
+    [temp release];
+}
+
 @implementation SIMASStandardLibrary
 + (void)registerToSIMAS:(NSString*)prefix {
     NSAutoreleasePool *pool = [NSAutoreleasePool new];
     SIMASRuntime *runtime = [SIMASRuntime runtime]; // yeee optimisation
-    [SIMASBoolean registerToRuntime];
-    [SIMASNumber registerToRuntime];
-    [SIMASString registerToRuntime];
     SIMASOperation *thing;
     thing = [SIMASOperation makeWithFunction:setVar];
     [thing setArgRange:2 toMaximum:3];
@@ -215,16 +363,16 @@ SIMASFUNC(quit) {
     [runtime registerOperation:[SIMASOperation makeWithFunction:consolePrintln] withName:@"println" withPrefix:@""];
     [runtime registerOperation:[SIMASOperation makeWithFunction:consolePrints] withName:@"prints" withPrefix:@""];
     
-    thing = [SIMASOperation makeWithFunction:SIMASGETFUNCTION([SIMASNumber class], @selector(add:)) withTargetGetter:SIMASCLASSMETHODNAME(SIMASNumber) andSelectorGetter:nullSelector];
+    thing = [SIMASOperation makeWithFunction:SIMASGETFUNCTION([SIMASArithmetic class], @selector(add:)) withTargetGetter:SIMASCLASSMETHODNAME(SIMASArithmetic) andSelectorGetter:nullSelector];
     [thing setArgRange:3 toMaximum:3];
     [runtime registerOperation:thing withName:@"add" withPrefix:@""];
-    thing = [SIMASOperation makeWithFunction:SIMASGETFUNCTION([SIMASNumber class], @selector(subtract:)) withTargetGetter:SIMASCLASSMETHODNAME(SIMASNumber) andSelectorGetter:nullSelector];
+    thing = [SIMASOperation makeWithFunction:SIMASGETFUNCTION([SIMASArithmetic class], @selector(subtract:)) withTargetGetter:SIMASCLASSMETHODNAME(SIMASArithmetic) andSelectorGetter:nullSelector];
     [thing setArgRange:3 toMaximum:3];
     [runtime registerOperation:thing withName:@"sub" withPrefix:@""];
-    thing = [SIMASOperation makeWithFunction:SIMASGETFUNCTION([SIMASNumber class], @selector(multiply:)) withTargetGetter:SIMASCLASSMETHODNAME(SIMASNumber) andSelectorGetter:nullSelector];
+    thing = [SIMASOperation makeWithFunction:SIMASGETFUNCTION([SIMASArithmetic class], @selector(multiply:)) withTargetGetter:SIMASCLASSMETHODNAME(SIMASArithmetic) andSelectorGetter:nullSelector];
     [thing setArgRange:3 toMaximum:3];
     [runtime registerOperation:thing withName:@"mul" withPrefix:@""];
-    thing = [SIMASOperation makeWithFunction:SIMASGETFUNCTION([SIMASNumber class], @selector(divide:)) withTargetGetter:SIMASCLASSMETHODNAME(SIMASNumber) andSelectorGetter:nullSelector];
+    thing = [SIMASOperation makeWithFunction:SIMASGETFUNCTION([SIMASArithmetic class], @selector(divide:)) withTargetGetter:SIMASCLASSMETHODNAME(SIMASArithmetic) andSelectorGetter:nullSelector];
     [thing setArgRange:3 toMaximum:3];
     [runtime registerOperation:thing withName:@"div" withPrefix:@""];
     
@@ -241,19 +389,19 @@ SIMASFUNC(quit) {
     [thing setArgRange:3 toMaximum:3];
     [runtime registerOperation:thing withName:@"ste" withPrefix:@""];
     
-    thing = [SIMASOperation makeWithFunction:SIMASGETFUNCTION([SIMASBoolean class], @selector(logicalOr:)) withTargetGetter:SIMASCLASSMETHODNAME(SIMASBoolean) andSelectorGetter:nullSelector];
+    thing = [SIMASOperation makeWithFunction:SIMASGETFUNCTION([SIMASComparison class], @selector(logicalOr:)) withTargetGetter:SIMASCLASSMETHODNAME(SIMASComparison) andSelectorGetter:nullSelector];
     [thing setArgRange:3 toMaximum:3];
     [runtime registerOperation:thing withName:@"or" withPrefix:@""];
-    thing = [SIMASOperation makeWithFunction:SIMASGETFUNCTION([SIMASBoolean class], @selector(logicalNor:)) withTargetGetter:SIMASCLASSMETHODNAME(SIMASBoolean) andSelectorGetter:nullSelector];
+    thing = [SIMASOperation makeWithFunction:SIMASGETFUNCTION([SIMASComparison class], @selector(logicalNor:)) withTargetGetter:SIMASCLASSMETHODNAME(SIMASComparison) andSelectorGetter:nullSelector];
     [thing setArgRange:3 toMaximum:3];
     [runtime registerOperation:thing withName:@"nor" withPrefix:@""];
-    thing = [SIMASOperation makeWithFunction:SIMASGETFUNCTION([SIMASBoolean class], @selector(logicalXor:)) withTargetGetter:SIMASCLASSMETHODNAME(SIMASBoolean) andSelectorGetter:nullSelector];
+    thing = [SIMASOperation makeWithFunction:SIMASGETFUNCTION([SIMASComparison class], @selector(logicalXor:)) withTargetGetter:SIMASCLASSMETHODNAME(SIMASComparison) andSelectorGetter:nullSelector];
     [thing setArgRange:3 toMaximum:3];
     [runtime registerOperation:thing withName:@"xor" withPrefix:@""];
-    thing = [SIMASOperation makeWithFunction:SIMASGETFUNCTION([SIMASBoolean class], @selector(logicalAnd:)) withTargetGetter:SIMASCLASSMETHODNAME(SIMASBoolean) andSelectorGetter:nullSelector];
+    thing = [SIMASOperation makeWithFunction:SIMASGETFUNCTION([SIMASComparison class], @selector(logicalAnd:)) withTargetGetter:SIMASCLASSMETHODNAME(SIMASComparison) andSelectorGetter:nullSelector];
     [thing setArgRange:3 toMaximum:3];
     [runtime registerOperation:thing withName:@"and" withPrefix:@""];
-    thing = [SIMASOperation makeWithFunction:SIMASGETFUNCTION([SIMASBoolean class], @selector(logicalNand:)) withTargetGetter:SIMASCLASSMETHODNAME(SIMASBoolean) andSelectorGetter:nullSelector];
+    thing = [SIMASOperation makeWithFunction:SIMASGETFUNCTION([SIMASComparison class], @selector(logicalNand:)) withTargetGetter:SIMASCLASSMETHODNAME(SIMASComparison) andSelectorGetter:nullSelector];
     [thing setArgRange:3 toMaximum:3];
     [runtime registerOperation:thing withName:@"nand" withPrefix:@""];
     
@@ -279,6 +427,9 @@ SIMASFUNC(quit) {
     thing = [SIMASOperation makeWithFunction:copying];
     [thing setArgRange:2 toMaximum:2];
     [runtime registerOperation:thing withName:@"copy" withPrefix:@""];
+    thing = [SIMASOperation makeWithFunction:xchg];
+    [thing setArgRange:2 toMaximum:2];
+    [runtime registerOperation:thing withName:@"xchg" withPrefix:@""];
     thing = [SIMASOperation makeWithFunction:pointationNotation];
     [thing setArgRange:2 toMaximum:2];
     [runtime registerOperation:thing withName:@"ptr" withPrefix:@""];

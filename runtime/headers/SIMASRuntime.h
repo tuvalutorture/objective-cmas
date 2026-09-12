@@ -5,6 +5,22 @@
 //  Created by Xander Gomez on 9/6/26.
 //  Copyright © 2026 Xander Gomez. All rights reserved.
 //
+//  come on now!
+//  let's all get on down
+//  do-si-do now!
+//  we gon' have a good ol' round
+//  don't be scared
+//  ‘cause there ain't nothin' to worry 'bout
+//  let your hair down
+//  and square dance with me
+//  come on now!
+//  let's all get on down
+//  do-si-do now!
+//  we gon' have a good ol' round
+//  don't be scared
+//  ‘cause there ain't nothin' to worry 'bout
+//  let your hair down
+//  and square dance with me
 
 #import <Foundation/Foundation.h>
 #import "SIMASVariable.h"
@@ -18,7 +34,7 @@
 #define SIMASGETFUNCTION(object, selector) (SIMASFUNCTYPE)[object methodForSelector:selector]
 #define SIMASGETINSTANCEFUNCTION(object, selector) (SIMASFUNCTYPE)[object instanceMethodForSelector:selector]
 
-#define SIMASGETVARIABLEWITHARGUMENT(argument) [[SIMASRuntime currentProgram] locateVariable:[args objectAtIndex:argument]] // convenience macro
+#define SIMASGETVARIABLEWITHARGUMENT(argument) [SIMASVariable findVariable:[args objectAtIndex:argument]] // convenience macro
 #define SIMASGETTYPEWITHARGUMENT(argument) [[SIMASRuntime runtime]->registeredTypes objectForKey:[[args objectAtIndex:argument] lowercaseString]]
 
 NSString *formatEscapes(NSString*);
@@ -70,8 +86,6 @@ NSArray *tokeniseStringExcludingQuotes(NSString*, NSCharacterSet*);
     NSMutableDictionary *labels;
     int programCounter;
 }
-
-- (SIMASVariable*)locateVariable:(NSString*)name;
 @end
 
 @interface SIMASRuntime : NSObject {
@@ -86,6 +100,7 @@ NSArray *tokeniseStringExcludingQuotes(NSString*, NSCharacterSet*);
 
 + (SIMASRuntime*)runtime;
 + (SIMASProgram*)currentProgram;
++ (NSString*)userInput;
 + (void)throwException:(NSString*)exception withReason:(NSString*)reason;
 + (void)throwException:(NSString*)exception withReason:(NSString*)reason withSnideRemark:(NSString*)remark;
 + (void)throwException:(NSString*)exception withReason:(NSString*)reason withInstruction:(SIMASInstruction*)instruction;

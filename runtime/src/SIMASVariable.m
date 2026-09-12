@@ -18,9 +18,12 @@
 //  as i look the other way
 //  i still try to find my place
 //  in the code of simas
+//
+//  breaking benjamin - diary of jane
 
 #import "SIMASVariable.h"
 #import "SIMASRuntime.h"
+#import "SIMASFunction.h"
 
 @implementation SIMASConversion
 + (Class)sourceType { return nil; }
@@ -85,11 +88,31 @@
 @implementation SIMASVariable
 + (SIMASVariable*)makeVariable:(NSString*)name {
     SIMASVariable *newVar;
-    if ((newVar = [[SIMASRuntime currentProgram] locateVariable:name])) return newVar;
+    if ((newVar = [self findVariable:name])) return newVar;
     if ([name characterAtIndex:0] == '$' || [[SIMASRuntime runtime] isExcepted]) { [SIMASRuntime throwException:@"IllegalName" withReason:@"Names starting with '$' are reserved by the SIMAS runtime."]; return nil; }
     newVar = [[SIMASVariable new] autorelease];
     [[SIMASRuntime currentProgram]->variables setObject:newVar forKey:name];
     return newVar;
+}
+
++ (SIMASVariable*)findVariable:(NSString*)name { // methods which call this should handle nil
+    if (![name length]) return nil;
+    if ([[name lowercaseString] isEqualToString:@"in"]) {
+        SIMASVariable *newVar = [[SIMASVariable new] autorelease];
+        [newVar setData:[SIMASString stringWithString:[SIMASRuntime userInput]]];
+        return newVar;
+    } else if ([name characterAtIndex:0] == '$') {
+        NSMutableArray *stack = [SIMASRuntime currentProgram]->stack;
+        NSString *cut = [name substringFromIndex:1];
+        if (isnumber([cut characterAtIndex:0]) && [cut characterAtIndex:0] != '0') {
+            int stackIndex = [cut intValue];
+            if (![stack count]) return nil;
+            if ([stack count] - 1 - stackIndex < 0) return nil;
+            if (stackIndex > ((SIMASStackFrame*)[stack lastObject])->function->argumentCount) return nil;
+            return [stack objectAtIndex:([stack count] - 1 - stackIndex)];
+        }
+        else return [[SIMASRuntime currentProgram]->variables objectForKey:name];
+    } else return [[SIMASRuntime currentProgram]->variables objectForKey:name];
 }
 
 - (void)setWithVariable:(SIMASVariable*)var {
@@ -173,45 +196,6 @@
     SIMASBoolean *aboolean = [SIMASBoolean new];
     ((SIMASBooleanBox*)aboolean->data)->boolean = boolean;
     return [aboolean autorelease];
-}
-
-+ (SIMASBooleanOperationSetup)setupOperation:(NSArray*)args {
-    SIMASBooleanOperationSetup setup;
-    setup.firstVariable = nil;
-    setup.secondVariable = nil;
-    SIMASVariable *first = [[SIMASRuntime currentProgram] locateVariable:[args objectAtIndex:1]];
-    if (first == nil) return setup; // error handling is downstream
-    SIMASVariable *secondVar = [[SIMASRuntime currentProgram] locateVariable:[args objectAtIndex:2]];
-    BOOL firstOperand, secondOperand;
-    if (secondVar == nil) secondOperand = [[args objectAtIndex:2] boolValue];
-    else secondOperand = [[[secondVar data] getConverted:[SIMASBoolean class]] boolValue];
-    firstOperand = [[first data] boolValue];
-    setup.firstVariable = first;
-    setup.secondVariable = secondVar;
-    setup.firstOperand = firstOperand;
-    setup.secondOperand = secondOperand;
-    return setup;
-}
-
-+ (void)logicalOr:(NSArray*)args {
-    SIMASBooleanOperationSetup setup = [self setupOperation:args];
-    [setup.firstVariable setData:[[SIMASBoolean booleanWithBoolean:(setup.firstOperand || setup.secondOperand)] getConverted:[[SIMASRuntime runtime]->registeredTypes objectForKey:[[args objectAtIndex:0] lowercaseString]]]]; // holy crap
-}
-+ (void)logicalAnd:(NSArray*)args {
-    SIMASBooleanOperationSetup setup = [self setupOperation:args];
-    [setup.firstVariable setData:[[SIMASBoolean booleanWithBoolean:(setup.firstOperand && setup.secondOperand)] getConverted:[[SIMASRuntime runtime]->registeredTypes objectForKey:[[args objectAtIndex:0] lowercaseString]]]]; // holy crap
-}
-+ (void)logicalXor:(NSArray*)args {
-    SIMASBooleanOperationSetup setup = [self setupOperation:args];
-    [setup.firstVariable setData:[[SIMASBoolean booleanWithBoolean:(setup.firstOperand != setup.secondOperand)] getConverted:[[SIMASRuntime runtime]->registeredTypes objectForKey:[[args objectAtIndex:0] lowercaseString]]]]; // holy crap
-}
-+ (void)logicalNor:(NSArray*)args {
-    SIMASBooleanOperationSetup setup = [self setupOperation:args];
-    [setup.firstVariable setData:[[SIMASBoolean booleanWithBoolean:!(setup.firstOperand || setup.secondOperand)] getConverted:[[SIMASRuntime runtime]->registeredTypes objectForKey:[[args objectAtIndex:0] lowercaseString]]]]; // holy crap
-}
-+ (void)logicalNand:(NSArray*)args {
-    SIMASBooleanOperationSetup setup = [self setupOperation:args];
-    [setup.firstVariable setData:[[SIMASBoolean booleanWithBoolean:!(setup.firstOperand && setup.secondOperand)] getConverted:[[SIMASRuntime runtime]->registeredTypes objectForKey:[[args objectAtIndex:0] lowercaseString]]]]; // holy crap
 }
 
 - (void)negate {
@@ -307,42 +291,6 @@
     SIMASNumber *theNumber = [SIMASNumber new];
     ((SIMASNumberBox*)theNumber->data)->num = (double)boolean;
     return [theNumber autorelease];
-}
-
-+ (SIMASNumberOperationSetup)setupOperation:(NSArray*)args {
-    SIMASNumberOperationSetup setup;
-    setup.firstVariable = nil;
-    setup.secondVariable = nil;
-    SIMASVariable *first = [[SIMASRuntime currentProgram] locateVariable:[args objectAtIndex:1]];
-    if (first == nil) return setup; // error handling downstream
-    SIMASVariable *secondVar = [[SIMASRuntime currentProgram] locateVariable:[args objectAtIndex:2]];
-    double firstOperand, secondOperand;
-    if (secondVar == nil) secondOperand = [[args objectAtIndex:2] doubleValue];
-    else secondOperand = [[[secondVar data] getConverted:[SIMASNumber class]] doubleValue];
-    firstOperand = [[first data] doubleValue];
-    setup.firstVariable = first;
-    setup.secondVariable = secondVar;
-    setup.firstOperand = firstOperand;
-    setup.secondOperand = secondOperand;
-    return setup;
-}
-
-+ (void)add:(NSArray*)args {
-    SIMASNumberOperationSetup setup = [self setupOperation:args];
-    [setup.firstVariable setData:[[SIMASNumber numberWithNumber:(setup.firstOperand + setup.secondOperand)] getConverted:[[SIMASRuntime runtime]->registeredTypes objectForKey:[[args objectAtIndex:0] lowercaseString]]]]; // holy crap
-}
-+ (void)subtract:(NSArray*)args {
-    SIMASNumberOperationSetup setup = [self setupOperation:args];
-    [setup.firstVariable setData:[[SIMASNumber numberWithNumber:(setup.firstOperand - setup.secondOperand)] getConverted:[[SIMASRuntime runtime]->registeredTypes objectForKey:[[args objectAtIndex:0] lowercaseString]]]]; // holy crap
-}
-+ (void)multiply:(NSArray*)args {
-    SIMASNumberOperationSetup setup = [self setupOperation:args];
-    [setup.firstVariable setData:[[SIMASNumber numberWithNumber:(setup.firstOperand * setup.secondOperand)] getConverted:[[SIMASRuntime runtime]->registeredTypes objectForKey:[[args objectAtIndex:0] lowercaseString]]]]; // holy crap
-}
-+ (void)divide:(NSArray*)args {
-    SIMASNumberOperationSetup setup = [self setupOperation:args];
-    if (setup.secondOperand == 0) [SIMASRuntime throwException:@"DivisionByZero" withReason:@"Division by zero is not allowed." withSnideRemark:@"man you are one stupid motherfucker innit? did the american education system fail you THAT hard holy shit 😂"];
-    else [setup.firstVariable setData:[[SIMASNumber numberWithNumber:(setup.firstOperand / setup.secondOperand)] getConverted:[[SIMASRuntime runtime]->registeredTypes objectForKey:[[args objectAtIndex:0] lowercaseString]]]]; // holy crap
 }
 
 - (SIMASBoolean*)greaterThan:(SIMASNumber*)number { return [SIMASBoolean booleanWithBoolean:([self doubleValue] > [number doubleValue])]; }

@@ -33,6 +33,8 @@
 //  cause the more that you try, the more that they need
 //  there's nowhere to hide
 //  when they break out the guillotine
+//
+//  starset - brave new world
 
 #import <Foundation/Foundation.h>
 #import "SIMASRuntime.h"
@@ -53,7 +55,7 @@ int main(int argc, const char * argv[]) {
             [programPool release];
         }
     } else {
-        [[SIMASRuntime runtime] runFromString:@"printc \"were you expecting a command line?\n\"; printc \"it's unimplemented\\; check back later :) (or input a file as an argument)\n\";"];
+        [[SIMASRuntime runtime] runFromString:@"import ./jeremy.simas;"];
     }
     [pool release];
     return 0;

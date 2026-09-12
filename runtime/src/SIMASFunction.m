@@ -17,6 +17,8 @@
 //  PROPOGANDA LEAVES US BLINDED
 //  i'm just sitting in my car and
 //  waiting for my damn chipotle burrito or something idk i'm tired as fuck man gimme a break
+//
+//  system of a down - hypnotize
 
 #import "SIMASFunction.h"
 #import "SIMASRuntime.h"
@@ -61,11 +63,11 @@
         NSString *nameString = [args objectAtIndex:i * 2 + 2];
         if ([typeString isEqualToString:@"v"]) {
             SIMASVariable *newVar = [SIMASVariable new];
-            [newVar setData:[[[[program locateVariable:nameString] data] copy] autorelease]];
+            [newVar setData:[[[[SIMASVariable findVariable:nameString] data] copy] autorelease]];
             [newArgs addObject:newVar];
             [newVar release];
         } else if ([typeString isEqualToString:@"p"]) {
-            [newArgs addObject:[[program locateVariable:nameString] makePointer]];
+            [newArgs addObject:[[SIMASVariable findVariable:nameString] makePointer]];
         } else {
             if (![[SIMASRuntime runtime]->registeredTypes objectForKey:typeString]) { [SIMASRuntime throwException:@"NonexistentType" withReason:[NSString stringWithFormat:@"Type %@ does not exist, thus cannot be used to convert.", typeString]]; return; }
             SIMASVariable *newVar = [SIMASVariable new];
@@ -95,7 +97,7 @@
     if ([args count] == 2) {
         SIMASVariable *newVar = [SIMASVariable new];
         NSString *type = [[args objectAtIndex:0] lowercaseString];
-        if ([type isEqualToString:@"v"]) [newVar setData:[[[[program locateVariable:[args objectAtIndex:1]] data] copy] autorelease]];
+        if ([type isEqualToString:@"v"]) [newVar setData:[[[[SIMASVariable findVariable:[args objectAtIndex:1]] data] copy] autorelease]];
         else {
             if (![[SIMASRuntime runtime]->registeredTypes objectForKey:type]) { [SIMASRuntime throwException:@"NonexistentType" withReason:[NSString stringWithFormat:@"Type %@ does not exist, thus cannot be used to convert.", type]]; return; }
             [newVar setData:[[[SIMASRuntime runtime]->registeredTypes objectForKey:type] fromString:[args objectAtIndex:1]]];
